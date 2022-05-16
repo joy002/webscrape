@@ -10,6 +10,7 @@ What I have done this week:
 ```
 - Resolve document error
 - get to know async function in javascript
-- Deeper research on javascript version of undetected_chromedriver, and acutllu find a way resolved bot detection after entering user account! :)
-                                    (StealthPlugin, waitForNavigation())
+- Deeper research on javascript version of undetected_chromedriver,
+                                       (StealthPlugin, waitForNavigation())
+  and acutlly find a way resolved bot detection after entering user account! :)
 ```
