@@ -1,46 +1,43 @@
-const puppeteer = require('puppeteer');
+var account = "joanna1229230@gmail.com"
 
-//read in account and password from the user
-(accountInfo => {
-    var accountName = document.getElementById("accountName").value;
-    var password = document.getElementById("password").value;
-    document.writeln("Account name " + accountName+ "<br>");
-    document.writeln("Password " + password);
-})();
+//Using puppeteer for Web automation
+const puppeteer = require('puppeteer-extra')
+
+//sleep function for bypass bot detection
+async function sleep(s) {
+    await new Promise(r => setTimeout(r, s));
+    return 0;
+}
+
+// Bypass bot detection
+// Add stealth plugin and use defaults (all tricks to hide puppeteer usage)
+const StealthPlugin = require("puppeteer-extra-plugin-stealth");
+puppeteer.use(StealthPlugin());
 
 //web browser login
 (async() => {
     //open the browser
     const browser = await puppeteer.launch({
+        executablePath: '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ,
         ignoreDefaultArgs: ['--disable-extensions'],
         headless: false
     });
     //open specific page
     const page = await browser.newPage();
+    let navigationPromise = page.waitForNavigation();
+    
     //go to the page
     await page.goto('https://mail.google.com/mail/u/0/?tab=rm#inbox');
-    //same as sleep in python
-    //await page.waitForSelector("Aa1VU")
-    //wait page.waitFor("3000")
+    await navigationPromise;
 
-    //fill in your infromation to slides(account)
-    //await page.waitForSelector("VfPpkd-vQzf8d")
-    //await page.type('VfPpkd-vQzf8d', username)
-    //fill in your infromation to slides(account)
-    //await page.waitForSelector("VfPpkd-vQzf8d")
-    //await page.type('Xb9hP', password)
-
-    //After log in, go to spam inbox
-    //await page.goto('https://mail.google.com/mail/u/0/#spam')
-
-    //const result = await page.evaluate(() => {
-    //   let allFromWebs = document.querySelectorAll();
-    //    const headingList = [...allFromWebs];
-    //    return headingList.map(h => h.innerText);
-    //})
-
-    //console.log(result)
+    //fill in your information(account)
+    await page.waitForSelector('input').then(
+        await page.type('input', account)
+    ).then(
+        await page.keyboard.press('Enter')
+    ).then(
+        sleep(5000)
+    );
     
-    await browser.close();
+    // await browser.close();
 })();
-
